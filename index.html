@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control" id="pinGnerator" type="text">
+                    <button id="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control" id="submitBtn" type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                                <div class="button" id="7">7</div>
+                                <div class="button" id="8">8</div>
+                                <div class="button" id="9">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" id="4">4</div>
+                                <div class="button" id="5">5</div>
+                                <div class="button" id="6">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" id="1">1</div>
+                                <div class="button" id="2">2</div>
+                                <div class="button" id="3">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="oparetor" id="backSpace">&lt;</div>
+                                <div class="button " id="0">0</div>
+                                <div class="oparetor" id="clear">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" class="submit-btn" id="submitBaton">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="notify-section">
+                <p class="notify" id="Match">❌ Pin Didn't Match, Please try again</p>
+                <p class="notify" id="showing">✅ Pin Matched... Secret door is opening for you</p>
+            </div>
+        </div>
+        <script>
+            function get(){
+                return document.getElementById("pinGnerator").value ;
+            }
+            function getOutPut(num) {
+                let value = document.getElementById("pinGnerator").value = num;
+                return value;
+
+
+            }
+            function printOutPut() {
+                return document.getElementById("submitBtn").value;
+                // const amountNumber = parseFloat(number);
+                // return amountNumber;
+            }
+            function getHistory(num) {
+                let value = document.getElementById("submitBtn").value = num;
+                return value;
+            }
+            function show(){
+                const show = document.getElementById("showing");
+                show.style.display = "block";
+
+            }
+            function match(){
+                const match = document.getElementById("Match");
+                match.style.display = "block";
+
+            }
+            function cshow(){
+                const show = document.getElementById("showing");
+                show.style.display = "none";
+
+            }
+            function cmatch(){
+                const match = document.getElementById("Match");
+                match.style.display = "none";
+
+            }
+
+            let generateBtn = document.getElementById("generate-btn");
+            generateBtn.addEventListener("click", function () {
+                let val = Math.floor(1000 + Math.random() * 9000);
+                getOutPut(val);
+
+            })
+
+
+            const num = document.getElementsByClassName("oparetor")
+            for (let i = 0; i < num.length; i++) {
+                num[i].addEventListener("click", function () {
+                    if (this.id == "clear") {
+                        getHistory("");
+                        cmatch();
+                        cshow();
+                    }
+                    else if (this.id == "backSpace") {
+                        let output = printOutPut();
+                        if (output) {
+                            output = output.substr(0, output.length - 1);
+                            getHistory(output);
+                            cmatch();
+                            cshow();
+                        }
+                    }
+
+                })
+
+            }
+
+            const number = document.getElementsByClassName("button")
+            for (let i = 0; i < number.length; i++) {
+                number[i].addEventListener("click", function () {
+                    let out = printOutPut();
+                    out = out + this.id;
+                    getHistory(out);
+
+                })
+
+            }
+            let submitBtn = document.getElementById("submitBaton")
+            submitBtn.addEventListener("click", function () {
+                if(get() == printOutPut()){
+                   show();
+                }
+                else{
+                    match();
+                }
+
+            })
+
+        </script>
+</body>
+
+</html>
